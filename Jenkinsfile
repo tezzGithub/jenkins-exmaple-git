@@ -1,47 +1,84 @@
-pipeline{
+// pipeline{
 
+//     agent any
+//     tools{
+//         maven "maven"
+//         //tools like docker also
+//     }
+//     environment{
+//         VERSION_NAME="1.34"
+//     }
+
+//     stages{
+//         stage("compile"){
+//             // when{
+//             //     expression{
+
+//             //     }
+//             // }
+//             steps{
+//                 sh 'javac Test.java'
+//                 sh 'echo "${VERSION_NAME}"'
+//             }
+//         }
+//         stage("run"){
+//             steps{
+//                 sh "java Test"
+//             }
+//         }
+
+//     }
+
+//     post{
+
+//         always{
+//             sh 'echo "always"'
+//         }
+
+//         success{
+//             sh 'echo "success"'
+//         }
+
+//         failure{
+//             sh 'echo "failure"'
+//         }
+
+//     }
+// }
+
+pipeline {
     agent any
-    tools{
+    tools {
         maven "maven"
-        //tools like docker also
+        // tools like docker also
     }
-    environment{
-        VERSION_NAME="1.34"
+    environment {
+        VERSION_NAME = "1.34"
     }
 
-    stages{
-        stage("compile"){
-            // when{
-            //     expression{
-
-            //     }
-            // }
-            steps{
+    stages {
+        stage("compile") {
+            steps {
                 sh 'javac Test.java'
                 sh 'echo "${VERSION_NAME}"'
             }
         }
-        stage("run"){
-            steps{
-                sh "java Test"
+        stage("run") {
+            steps {
+                sh 'java Test'
             }
         }
-
     }
 
-    post{
-
-        always{
+    post {
+        always {
             sh 'echo "always"'
         }
-
-        success{
+        success {
             sh 'echo "success"'
         }
-
-        failure{
+        failure {
             sh 'echo "failure"'
         }
-
     }
 }
