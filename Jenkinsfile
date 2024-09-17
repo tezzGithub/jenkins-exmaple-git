@@ -50,7 +50,6 @@ pipeline {
     agent any
     tools {
         maven "maven"
-        // tools like docker also
     }
     environment {
         VERSION_NAME = "1.34"
@@ -59,26 +58,50 @@ pipeline {
     stages {
         stage("compile") {
             steps {
-                sh 'javac Test.java'
-                sh 'echo "${VERSION_NAME}"'
+                if (isUnix()) {
+                    sh 'javac Test.java'
+                } else {
+                    bat 'javac Test.java'
+                }
+                if (isUnix()) {
+                    sh 'echo "${VERSION_NAME}"'
+                } else {
+                    bat 'echo %VERSION_NAME%'
+                }
             }
         }
         stage("run") {
             steps {
-                sh 'java Test'
+                if (isUnix()) {
+                    sh 'java Test'
+                } else {
+                    bat 'java Test'
+                }
             }
         }
     }
 
     post {
         always {
-            sh 'echo "always"'
+            if (isUnix()) {
+                sh 'echo "always"'
+            } else {
+                bat 'echo always'
+            }
         }
         success {
-            sh 'echo "success"'
+            if (isUnix()) {
+                sh 'echo "success"'
+            } else {
+                bat 'echo success'
+            }
         }
         failure {
-            sh 'echo "failure"'
+            if (isUnix()) {
+                sh 'echo "failure"'
+            } else {
+                bat 'echo failure'
+            }
         }
     }
 }
